@@ -54,6 +54,7 @@ hmc seed . --verbose
 ```
 
 The seeder will:
+
 1. Parse `persona.md` for factual attributes and voice examples
 2. Extract technology stack from `requirements.txt`, `pyproject.toml`, or `package.json`
 3. Scan project structure
@@ -116,7 +117,7 @@ memory = HybridMemoryCore(project_id="my-agent")
 memory.add_semantic(
     content="""
     # Login Feature Specification
-    
+
     Users should be able to authenticate using email and password.
     Implement JWT-based session management.
     """,
@@ -261,30 +262,166 @@ Contributions are welcome! Please ensure:
 
 ### ChromaDB Installation Issues
 
-If you encounter issues installing ChromaDB, ensure you have:
-- Python 3.10 or higher
-- C++ build tools (for some dependencies)
+**Problem**: Failed to install ChromaDB or build dependencies.
 
-On macOS:
-```bash
-xcode-select --install
-```
+**Solutions**:
 
-On Ubuntu/Debian:
-```bash
-sudo apt-get install build-essential
-```
+- Ensure Python 3.10+ is installed: `python --version`
+- Install C++ build tools:
+
+  macOS:
+
+  ```bash
+  xcode-select --install
+  ```
+
+  Ubuntu/Debian:
+
+  ```bash
+  sudo apt-get install build-essential python3-dev
+  ```
+
+  Windows:
+
+  - Install Visual Studio Build Tools
+  - Or install via: `pip install --upgrade setuptools wheel`
 
 ### Memory Directory Permissions
 
-Ensure the `.hmc_memory` directory is writable:
+**Problem**: Permission denied when accessing `.hmc_memory/`.
+
+**Solutions**:
+
 ```bash
+# Fix permissions
 chmod -R u+w .hmc_memory
+
+# Or remove and reinitialize
+rm -rf .hmc_memory
+hmc seed .
 ```
 
 ### Import Errors
 
-If you get import errors after installation, ensure the package is installed in your active environment:
+**Problem**: `ModuleNotFoundError: No module named 'hmc'`
+
+**Solutions**:
+
 ```bash
+# Verify installation
 pip show hmc
+
+# Reinstall if needed
+pip uninstall hmc
+pip install -e .
+
+# Check Python path
+python -c "import sys; print('\n'.join(sys.path))"
 ```
+
+### Database Locked Errors
+
+**Problem**: `sqlite3.OperationalError: database is locked`
+
+**Solutions**:
+
+- Close any other processes accessing the database
+- Ensure only one HMC instance per project at a time
+- If persists, check for stale lock files:
+  ```bash
+  rm .hmc_memory/sqlite/*.db-shm
+  rm .hmc_memory/sqlite/*.db-wal
+  ```
+
+### ChromaDB Collection Errors
+
+**Problem**: Collection not found or version mismatch.
+
+**Solutions**:
+
+```bash
+# Reset ChromaDB (WARNING: deletes all semantic data)
+rm -rf .hmc_memory/chroma
+
+# Reinitialize
+python -c "from hmc import HybridMemoryCore; HybridMemoryCore('test', './.hmc_memory')"
+```
+
+### Memory/Performance Issues
+
+**Problem**: Slow queries or high memory usage.
+
+**Solutions**:
+
+- Reduce chunk size when seeding large projects
+- Use more specific query filters to narrow results
+- Index large codebases incrementally
+- Monitor with: `du -sh .hmc_memory/`
+
+### Seeder Hangs on Large Projects
+
+**Problem**: `hmc seed` hangs or takes too long.
+
+**Solutions**:
+
+```bash
+# Use verbose mode to see progress
+hmc seed . --verbose
+
+# Exclude large directories via .gitignore patterns
+echo "node_modules/" >> .gitignore
+echo "venv/" >> .gitignore
+
+# Process specific subdirectories
+hmc seed ./src
+```
+
+### Type Checking Errors
+
+**Problem**: mypy reports errors in user code.
+
+**Solutions**:
+
+- HMC provides type stubs via `py.typed`
+- Ensure strict mode is compatible:
+  ```bash
+  mypy --no-strict-optional src/
+  ```
+- Update type hints in your code
+- Check installed mypy version: `mypy --version` (requires 1.5.0+)
+
+### Common Usage Errors
+
+**Problem**: `ValidationError: project_id must contain only alphanumeric characters`
+
+**Solution**: Use only letters, numbers, hyphens, and underscores in project IDs:
+
+```python
+# ❌ Invalid
+memory = HybridMemoryCore("my project")  # spaces not allowed
+memory = HybridMemoryCore("my@project")  # @ not allowed
+
+# ✅ Valid
+memory = HybridMemoryCore("my-project")
+memory = HybridMemoryCore("my_project_123")
+```
+
+**Problem**: Semantic search returns no results.
+
+**Solutions**:
+
+- Check if content was actually embedded: verify `.hmc_memory/chroma/` is not empty
+- Try broader query terms
+- Remove or relax metadata filters
+- Verify collection name matches project_id
+- Check content was embedded with `add_semantic()`, not just stored as fact
+
+### Getting Help
+
+If you encounter issues not covered here:
+
+1. Check the [examples/](examples/) directory for working code samples
+2. Enable verbose mode: `hmc seed . --verbose`
+3. Review error messages carefully - they usually indicate the problem
+4. Ensure you're using Python 3.10+ and all dependencies are installed
+5. Try with a minimal test project first to isolate the issue
