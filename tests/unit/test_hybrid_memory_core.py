@@ -97,8 +97,8 @@ class TestHybridMemoryCore:
         """Test that __init__ creates default backends if not provided."""
         core = HybridMemoryCore(project_id="test", db_directory=temp_dir)
         
-        assert core.factual_store is not None
-        assert core.semantic_store is not None
+        assert core._factual_store is not None
+        assert core._semantic_store is not None
 
     def test_init_accepts_custom_backends(self, temp_dir, mock_factual_store, mock_semantic_store):
         """Test that __init__ accepts custom backend instances."""
@@ -109,8 +109,8 @@ class TestHybridMemoryCore:
             semantic_store=mock_semantic_store
         )
         
-        assert core.factual_store is mock_factual_store
-        assert core.semantic_store is mock_semantic_store
+        assert core._factual_store is mock_factual_store
+        assert core._semantic_store is mock_semantic_store
 
     def test_init_calls_setup_on_backends(self, temp_dir, mock_factual_store, mock_semantic_store):
         """Test that __init__ calls setup() on both backends."""
@@ -182,7 +182,7 @@ class TestHybridMemoryCore:
         results = core.query_semantic("test query", k=5, filter={"type": "test"})
         
         mock_semantic_store.query_semantic.assert_called_once_with(
-            "test query", 5, {"type": "test"}
+            "test query", k=5, filter={"type": "test"}
         )
         assert results == expected_results
 
@@ -198,7 +198,7 @@ class TestHybridMemoryCore:
         core.query_semantic("test query")
         
         mock_semantic_store.query_semantic.assert_called_once_with(
-            "test query", 5, None
+            "test query", k=5, filter=None
         )
 
     def test_integration_with_real_backends(self, temp_dir):

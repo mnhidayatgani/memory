@@ -89,7 +89,7 @@ class TestPersistence:
     def test_sqlite_file_persistence(self, temp_dir):
         """Test that SQLite database file is created and persists."""
         project_id = "test-sqlite-file"
-        db_path = temp_dir / "sqlite" / "facts.db"  # Correct path with sqlite subdirectory
+        db_path = temp_dir / "sqlite" / "facts.db"
         
         # Create and store data
         hmc1 = HybridMemoryCore(project_id=project_id, db_directory=temp_dir)

@@ -227,6 +227,13 @@ def seed_project(
     # Store metadata
     hmc.set_fact("__project_root__", str(project_path.absolute()))
     hmc.set_fact("__seeded_at__", datetime.now(timezone.utc).isoformat())
+    
+    # Store HMC version
+    try:
+        from hmc import __version__
+        hmc.set_fact("__hmc_version__", __version__)
+    except ImportError:
+        hmc.set_fact("__hmc_version__", "unknown")
 
     # Initialize statistics
     stats = {

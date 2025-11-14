@@ -16,7 +16,7 @@ class TestChunkFileContent:
         
         assert len(chunks) == 1
         assert chunks[0]["content"] == content
-        assert chunks[0]["line_range"] == (1, 1)
+        assert chunks[0]["line_range"] == "1-1"
 
     def test_paragraph_aware_splitting(self):
         """Test that splitting respects paragraph boundaries."""
@@ -49,7 +49,7 @@ Line 5"""
             assert "-" in chunk["line_range"]
             
             # Parse line range
-            start, end = chunk["line_range"]
+            start, end = map(int, chunk["line_range"].split("-"))
             assert start >= 1
             assert end >= start
 
@@ -109,7 +109,7 @@ Third paragraph."""
         chunks = chunk_file_content(content, max_size=100)
         
         # Verify all content is preserved
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_code_with_functions(self):
@@ -138,7 +138,7 @@ def function3():
         
         chunks = chunk_file_content(content, max_size=1000)
         
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_chunk_metadata_structure(self):
@@ -162,7 +162,7 @@ def function3():
         
         last_end = 0
         for chunk in chunks:
-            start, end = chunk["line_range"]
+            start, end = map(int, chunk["line_range"].split("-"))
             
             # Start should be after previous end
             if last_end > 0:
@@ -180,7 +180,7 @@ def function3():
         assert len(chunks) > 1
         
         # Reconstruct and verify
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_mixed_line_lengths(self):
@@ -194,7 +194,7 @@ Final short line."""
         chunks = chunk_file_content(content, max_size=100)
         
         # Verify integrity
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_markdown_content(self):
@@ -214,7 +214,7 @@ Final paragraph."""
         chunks = chunk_file_content(content, max_size=80)
         
         # Verify all content preserved
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_default_max_size(self):
@@ -236,7 +236,7 @@ Line with quotes: "double" and 'single'"""
         
         chunks = chunk_file_content(content, max_size=1000)
         
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_very_small_max_size(self):
@@ -250,7 +250,7 @@ Line with quotes: "double" and 'single'"""
         assert all("content" in chunk for chunk in chunks)
         
         # Reconstruct
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_exact_max_size_boundary(self):
@@ -278,7 +278,7 @@ Line with quotes: "double" and 'single'"""
         
         chunks = chunk_file_content(content, max_size=1000)
         
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content
 
     def test_tabs_and_spaces(self):
@@ -287,5 +287,5 @@ Line with quotes: "double" and 'single'"""
         
         chunks = chunk_file_content(content, max_size=1000)
         
-        reconstructed = "".join(str(chunk["content"]) for chunk in chunks)
+        reconstructed = "".join(chunk["content"] for chunk in chunks)
         assert reconstructed == content

@@ -34,7 +34,7 @@ class TestSQLiteFactualStore:
     def test_init_connection_is_none(self, temp_db):
         """Test that connection is lazy-initialized."""
         store = SQLiteFactualStore(db_path=temp_db)
-        assert store._connection is None
+        assert store._conn is None
 
     def test_get_connection_creates_connection(self, store):
         """Test that _get_connection creates database connection."""
@@ -232,13 +232,23 @@ class TestSQLiteFactualStore:
         with pytest.raises(ValidationError):
             store.get_fact(123)
 
-    # Note: SQLiteFactualStore uses lazy connection and doesn't expose close() method
-    # Connection cleanup is handled automatically by Python's garbage collector
-    
-    def test_persistence_across_instances(self, store, temp_db):
-        """Test that data persists across different store instances."""
+    def test_close_closes_connection(self, store):
+        """Test that close() closes database connection."""
+        store.setup()
+        store.set_fact("key", "value")
+        
+        store.close()
+        assert store._conn is None
+
+    def test_close_when_not_connected(self, store):
+        """Test that close() works when no connection exists."""
+        store.close()  # Should not raise
+
+    def test_persistence_after_close(self, store, temp_db):
+        """Test that data persists after closing."""
         store.setup()
         store.set_fact("persistent", "data")
+        store.close()
         
         # Create new store instance
         new_store = SQLiteFactualStore(db_path=temp_db)

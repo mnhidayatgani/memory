@@ -307,12 +307,17 @@ Allow users to authenticate using email and password.
             },
         )
 
-        # Query with multiple filters (ChromaDB supports this)
+        # Query with multiple filters using $and operator (ChromaDB format)
         results = hmc.query_semantic(
-            "specification", k=10, filter={"priority": "P1", "feature": "auth"}
+            "specification", 
+            k=10, 
+            filter={"$and": [{"priority": "P1"}, {"feature": "auth"}]}
         )
 
         # Should only return P1 auth spec
+        assert len(results) == 1
+        assert results[0]["metadata"]["priority"] == "P1"
+        assert results[0]["metadata"]["feature"] == "auth"
         if len(results) > 0:
             assert results[0]["metadata"]["priority"] == "P1"
             assert results[0]["metadata"]["feature"] == "auth"
