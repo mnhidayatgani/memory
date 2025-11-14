@@ -29,9 +29,47 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-[Gates determined based on constitution file]
+### Principle 1: Strict Separation of Concerns ✓/✗
+
+- [ ] Storage layer code contains NO application or persona logic
+- [ ] Clear boundaries maintained between: Storage (`hmc`), Data (persona/specs), Application (agent logic)
+- [ ] No domain-specific behavior in storage implementations
+
+### Principle 2: Package-First Design ✓/✗
+
+- [ ] Project uses `pyproject.toml` configuration
+- [ ] Follows `src/hmc` layout convention
+- [ ] Installable via pip
+- [ ] NOT implemented as single-file script
+
+### Principle 3: Dual-Use Mandate ✓/✗
+
+- [ ] Greenfield initialization documented and tested
+- [ ] Brownfield seeder utility implemented with equal priority
+- [ ] Both use cases covered in acceptance criteria
+
+### Principle 4: Strict Abstraction ✓/✗
+
+- [ ] Core classes use Abstract Base Classes for storage backends
+- [ ] Backend-specific code isolated behind interfaces
+- [ ] No direct backend dependencies in core API
+
+### Principle 5: Quality & Standards ✓/✗
+
+- [ ] All code fully type-hinted (Python 3.10+)
+- [ ] Public classes/methods have Google-style docstrings
+- [ ] Test coverage includes unit, integration, and seeder scenarios
+- [ ] Linting, formatting, type checking configured
+
+### Principle 6: Technology Stack ✓/✗
+
+- [ ] Uses Python 3.10+
+- [ ] Factual store: sqlite3
+- [ ] Semantic store: chromadb
+- [ ] CLI: typer or click
+- [ ] Any deviations explicitly justified
 
 ## Project Structure
 
@@ -48,6 +86,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -98,7 +137,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
