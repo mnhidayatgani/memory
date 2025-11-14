@@ -31,28 +31,28 @@ class TestSQLiteFactualStore:
         store = SQLiteFactualStore(db_path=temp_db)
         assert store.db_path == temp_db
 
-    def test_init_connection_is_none(self, temp_db):
+    def test_init_connectionection_is_none(self, temp_db):
         """Test that connection is lazy-initialized."""
         store = SQLiteFactualStore(db_path=temp_db)
-        assert store._conn is None
+        assert store._connection is None
 
-    def test_get_connection_creates_connection(self, store):
-        """Test that _get_connection creates database connection."""
-        conn = store._get_connection()
+    def test_get_connectionection_creates_connectionection(self, store):
+        """Test that _get_connectionection creates database connection."""
+        conn = store._get_connectionection()
         assert conn is not None
         assert isinstance(conn, sqlite3.Connection)
 
-    def test_get_connection_is_cached(self, store):
-        """Test that _get_connection returns same connection."""
-        conn1 = store._get_connection()
-        conn2 = store._get_connection()
+    def test_get_connectionection_is_cached(self, store):
+        """Test that _get_connectionection returns same connection."""
+        conn1 = store._get_connectionection()
+        conn2 = store._get_connectionection()
         assert conn1 is conn2
 
     def test_setup_creates_table(self, store):
         """Test that setup() creates facts table."""
         store.setup()
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='facts'"
         )
@@ -65,7 +65,7 @@ class TestSQLiteFactualStore:
         """Test that facts table has correct columns."""
         store.setup()
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute("PRAGMA table_info(facts)")
         columns = {row[1]: row[2] for row in cursor.fetchall()}
         
@@ -87,7 +87,7 @@ class TestSQLiteFactualStore:
         store.setup()
         store.set_fact("test_key", "test_value")
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute("SELECT COUNT(*) FROM facts WHERE key = ?", ("test_key",))
         count = cursor.fetchone()[0]
         
@@ -99,7 +99,7 @@ class TestSQLiteFactualStore:
         test_value = {"nested": {"data": [1, 2, 3]}}
         store.set_fact("complex_key", test_value)
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute("SELECT json_value FROM facts WHERE key = ?", ("complex_key",))
         row = cursor.fetchone()
         
@@ -112,7 +112,7 @@ class TestSQLiteFactualStore:
         store.set_fact("key", "original")
         store.set_fact("key", "updated")
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute("SELECT json_value FROM facts WHERE key = ?", ("key",))
         row = cursor.fetchone()
         
@@ -123,7 +123,7 @@ class TestSQLiteFactualStore:
         store.setup()
         store.set_fact("key", "value")
         
-        conn = store._get_connection()
+        conn = store._get_connectionection()
         cursor = conn.execute("SELECT updated_at FROM facts WHERE key = ?", ("key",))
         row = cursor.fetchone()
         
@@ -180,7 +180,7 @@ class TestSQLiteFactualStore:
         for key, value in test_cases:
             store.set_fact(key, value)
             
-            conn = store._get_connection()
+            conn = store._get_connectionection()
             cursor = conn.execute("SELECT json_value FROM facts WHERE key = ?", (key,))
             row = cursor.fetchone()
             stored = json.loads(row[0])
@@ -232,15 +232,15 @@ class TestSQLiteFactualStore:
         with pytest.raises(ValidationError):
             store.get_fact(123)
 
-    def test_close_closes_connection(self, store):
+    def test_close_closes_connectionection(self, store):
         """Test that close() closes database connection."""
         store.setup()
         store.set_fact("key", "value")
         
         store.close()
-        assert store._conn is None
+        assert store._connection is None
 
-    def test_close_when_not_connected(self, store):
+    def test_close_when_not_connectionected(self, store):
         """Test that close() works when no connection exists."""
         store.close()  # Should not raise
 

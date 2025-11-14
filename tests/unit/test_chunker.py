@@ -16,7 +16,7 @@ class TestChunkFileContent:
         
         assert len(chunks) == 1
         assert chunks[0]["content"] == content
-        assert chunks[0]["line_range"] == "1-1"
+        assert chunks[0]["line_range"] == (1, 1)
 
     def test_paragraph_aware_splitting(self):
         """Test that splitting respects paragraph boundaries."""
