@@ -143,20 +143,20 @@
 - [x] T079 [P] [US1] Write unit tests for SQLiteFactualStore.set_fact() (insert, update, JSON serialization)
 - [x] T080 [P] [US1] Write unit tests for SQLiteFactualStore.get_fact() (retrieve, None for missing keys, JSON deserialization)
 - [x] T081 [P] [US1] Write unit tests for SQLiteFactualStore validation errors (empty key, non-JSON-serializable value)
-- [ ] T082 [P] [US1] Create tests/unit/test_chroma_store.py with fixtures for temp ChromaDB directory
-- [ ] T083 [P] [US1] Write unit tests for ChromaSemanticStore.setup() (collection creation, idempotency)
-- [ ] T084 [P] [US1] Write unit tests for ChromaSemanticStore.add_semantic() (embedding generation, metadata storage, UUID return)
-- [ ] T085 [P] [US1] Write unit tests for ChromaSemanticStore.query_semantic() (similarity search, k parameter, filter parameter, result format)
-- [ ] T086 [P] [US1] Write unit tests for ChromaSemanticStore validation errors (empty content, k <= 0, invalid metadata)
+- [x] T082 [P] [US1] Create tests/unit/test_chroma_store.py with fixtures for temp ChromaDB directory
+- [x] T083 [P] [US1] Write unit tests for ChromaSemanticStore.setup() (collection creation, idempotency)
+- [x] T084 [P] [US1] Write unit tests for ChromaSemanticStore.add_semantic() (embedding generation, metadata storage, UUID return)
+- [x] T085 [P] [US1] Write unit tests for ChromaSemanticStore.query_semantic() (similarity search, k parameter, filter parameter, result format)
+- [x] T086 [P] [US1] Write unit tests for ChromaSemanticStore validation errors (empty content, k <= 0, invalid metadata)
 - [x] T087 [P] [US1] Create tests/unit/test_hybrid_memory_core.py with mock storage backends
 - [x] T088 [P] [US1] Write unit tests for HybridMemoryCore.**init**() (project_id validation, directory creation, backend initialization, default backends)
 - [x] T089 [P] [US1] Write unit tests for HybridMemoryCore delegation methods (set_fact, get_fact, add_semantic, query_semantic)
-- [ ] T090 [P] [US1] Create tests/unit/test_chunker.py
-- [ ] T091 [P] [US1] Write unit tests for chunk_file_content() (paragraph splitting, oversized section handling, line range tracking)
-- [ ] T092 [P] [US1] Create tests/unit/test_persona_parser.py
-- [ ] T093 [P] [US1] Write unit tests for parse_persona_md() (factual section parsing, semantic section parsing, malformed input handling)
-- [ ] T094 [P] [US1] Create tests/unit/test_cli.py with Typer CliRunner
-- [ ] T095 [P] [US1] Write unit tests for CLI seed command (argument parsing, validation, error messages, exit codes)
+- [x] T090 [P] [US1] Create tests/unit/test_chunker.py
+- [x] T091 [P] [US1] Write unit tests for chunk_file_content() (paragraph splitting, oversized section handling, line range tracking)
+- [x] T092 [P] [US1] Create tests/unit/test_persona_parser.py
+- [x] T093 [P] [US1] Write unit tests for parse_persona_md() (factual section parsing, semantic section parsing, malformed input handling)
+- [x] T094 [P] [US1] Create tests/unit/test_cli.py with Typer CliRunner
+- [x] T095 [P] [US1] Write unit tests for CLI seed command (argument parsing, validation, error messages, exit codes)
 
 ### Integration Tests for User Story 1
 
@@ -194,14 +194,14 @@
 
 ### Integration Tests for User Story 2
 
-- [ ] T110 [P] [US2] Create tests/integration/test_workflow_documents.py
-- [ ] T111 [P] [US2] Write integration test: store spec document with metadata (type='spec', feature='login', status='draft')
-- [ ] T112 [P] [US2] Write integration test: query for specs by feature name with filter, verify correct results
-- [ ] T113 [P] [US2] Write integration test: store multiple document types (spec, plan, task), query with type filter
-- [ ] T114 [P] [US2] Write integration test: update document status (draft → approved), verify query with status filter
-- [ ] T115 [P] [US2] Write integration test: factual key-value tracking (current_feature, task_counter) for workflow state
-- [ ] T116 [P] [US2] Write integration test: semantic search ranking (verify most relevant document returned first)
-- [ ] T117 [P] [US2] Write integration test: metadata preservation (all original metadata fields returned in query results)
+- [x] T110 [P] [US2] Create tests/integration/test_workflow_documents.py
+- [x] T111 [P] [US2] Write integration test: store spec document with metadata (type='spec', feature='login', status='draft')
+- [x] T112 [P] [US2] Write integration test: query for specs by feature name with filter, verify correct results
+- [x] T113 [P] [US2] Write integration test: store multiple document types (spec, plan, task), query with type filter
+- [x] T114 [P] [US2] Write integration test: update document status (draft → approved), verify query with status filter
+- [x] T115 [P] [US2] Write integration test: factual key-value tracking (current_feature, task_counter) for workflow state
+- [x] T116 [P] [US2] Write integration test: semantic search ranking (verify most relevant document returned first)
+- [x] T117 [P] [US2] Write integration test: metadata preservation (all original metadata fields returned in query results)
 
 **Checkpoint**: User Story 2 (workflow API) is fully functional and independently testable
 
@@ -226,12 +226,12 @@
 
 ### Integration Tests for User Story 3
 
-- [ ] T122 [P] [US3] Create tests/integration/test_seeder_greenfield.py
-- [ ] T123 [P] [US3] Write integration test: initialize HMC in empty directory, verify .hmc_memory created with sqlite and chroma subdirectories
-- [ ] T124 [P] [US3] Write integration test: run `hmc seed` on empty project (no persona.md), verify graceful skip with appropriate message
-- [ ] T125 [P] [US3] Write integration test: manually store facts, verify retrieval after HMC re-initialization (persistence)
-- [ ] T126 [P] [US3] Write integration test: manually embed content, verify semantic search works after HMC re-initialization
-- [ ] T127 [P] [US3] Write integration test: idempotent initialization (call HybridMemoryCore.**init** multiple times, verify no errors)
+- [x] T122 [P] [US3] Create tests/integration/test_seeder_greenfield.py
+- [x] T123 [P] [US3] Write integration test: initialize HMC in empty directory, verify .hmc_memory created with sqlite and chroma subdirectories
+- [x] T124 [P] [US3] Write integration test: run `hmc seed` on empty project (no persona.md), verify graceful skip with appropriate message
+- [x] T125 [P] [US3] Write integration test: manually store facts, verify retrieval after HMC re-initialization (persistence)
+- [x] T126 [P] [US3] Write integration test: manually embed content, verify semantic search works after HMC re-initialization
+- [x] T127 [P] [US3] Write integration test: idempotent initialization (call HybridMemoryCore.**init** multiple times, verify no errors)
 
 ### Persistence Tests (Cross-Story)
 
@@ -254,8 +254,8 @@
 - [x] T135 [P] Update README.md with quick start for brownfield use case (US1)
 - [x] T136 [P] Update README.md with quick start for greenfield use case (US3)
 - [x] T137 [P] Update README.md with workflow documents example (US2)
-- [ ] T138 [P] Add troubleshooting section to README.md (common errors, solutions)
-- [ ] T139 [P] Add API reference section to README.md or create separate API.md
+- [x] T138 [P] Add troubleshooting section to README.md (common errors, solutions)
+- [x] T139 [P] Add API reference section to README.md or create separate API.md
 
 ---
 
@@ -263,11 +263,11 @@
 
 **Purpose**: Final quality improvements, performance optimization, and release preparation
 
-- [ ] T140 [P] Add type checking with mypy to all modules, fix any type errors
-- [ ] T141 [P] Run black formatter on all source files (src/hmc/, tests/, examples/)
-- [ ] T142 [P] Run ruff linter on all source files, fix all violations
+- [x] T140 [P] Add type checking with mypy to all modules, fix any type errors
+- [x] T141 [P] Run black formatter on all source files (src/hmc/, tests/, examples/)
+- [x] T142 [P] Run ruff linter on all source files, fix all violations
 - [ ] T143 [P] Review all Google-style docstrings for completeness and accuracy
-- [ ] T144 [P] Run pytest with coverage report, ensure >85% coverage for src/hmc/ modules
+- [x] T144 [P] Run pytest with coverage report, ensure >85% coverage for src/hmc/ modules
 - [ ] T145 [P] Fix any coverage gaps by adding unit tests for uncovered code paths
 - [ ] T146 [P] Performance test: seed sample 50-file project, verify <30 second completion (SC-002)
 - [ ] T147 [P] Performance test: query 10,000 semantic chunks, verify <100ms response (SC-009)
