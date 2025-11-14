@@ -266,19 +266,19 @@
 - [x] T140 [P] Add type checking with mypy to all modules, fix any type errors
 - [x] T141 [P] Run black formatter on all source files (src/hmc/, tests/, examples/)
 - [x] T142 [P] Run ruff linter on all source files, fix all violations
-- [ ] T143 [P] Review all Google-style docstrings for completeness and accuracy
+- [x] T143 [P] Review all Google-style docstrings for completeness and accuracy
 - [x] T144 [P] Run pytest with coverage report, ensure >85% coverage for src/hmc/ modules
-- [ ] T145 [P] Fix any coverage gaps by adding unit tests for uncovered code paths
-- [ ] T146 [P] Performance test: seed sample 50-file project, verify <30 second completion (SC-002)
-- [ ] T147 [P] Performance test: query 10,000 semantic chunks, verify <100ms response (SC-009)
-- [ ] T148 [P] Test backend swappability: create mock backend, inject into HybridMemoryCore, verify works (SC-008)
-- [ ] T149 [P] Create CHANGELOG.md documenting v1.0.0 features
-- [ ] T150 [P] Add package version to src/hmc/**init**.py (**version** = "1.0.0")
-- [ ] T151 [P] Create .pre-commit-config.yaml with black, ruff, mypy hooks (optional but recommended)
-- [ ] T152 Verify all Constitution principles: run checklist from plan.md Constitution Check section
-- [ ] T153 Run full test suite (contract + integration + unit) and verify all pass
-- [ ] T154 Build distribution packages (python -m build) and verify wheel/sdist created
-- [ ] T155 Test installation from built wheel in fresh virtual environment
+- [x] T145 [P] Fix any coverage gaps by adding unit tests for uncovered code paths
+- [x] T146 [P] Performance test: seed sample 50-file project, verify <30 second completion (SC-002)
+- [x] T147 [P] Performance test: query 10,000 semantic chunks, verify <100ms response (SC-009)
+- [x] T148 [P] Test backend swappability: create mock backend, inject into HybridMemoryCore, verify works (SC-008)
+- [x] T149 [P] Create CHANGELOG.md documenting v1.0.0 features
+- [x] T150 [P] Add package version to src/hmc/**init**.py (**version** = "1.0.0")
+- [x] T151 [P] Create .pre-commit-config.yaml with black, ruff, mypy hooks (optional but recommended)
+- [x] T152 Verify all Constitution principles: run checklist from plan.md Constitution Check section
+- [x] T153 Run full test suite (contract + integration + unit) and verify all pass
+- [x] T154 Build distribution packages (python -m build) and verify wheel/sdist created
+- [x] T155 Test installation from built wheel in fresh virtual environment
 
 ---
 
