@@ -27,8 +27,7 @@ print("=" * 50)
 project_path = Path(__file__).parent.parent / "test_project"
 if (project_path / ".hmc_memory").exists():
     memory = HybridMemoryCore(
-        project_id="test_project",
-        db_directory=str(project_path / ".hmc_memory")
+        project_id="test_project", db_directory=str(project_path / ".hmc_memory")
     )
 
     # Retrieve persona facts

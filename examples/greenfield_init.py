@@ -6,10 +6,7 @@ This demonstrates setting up HMC memory from scratch without existing code.
 from hmc import HybridMemoryCore
 
 # Initialize HMC in a new project
-memory = HybridMemoryCore(
-    project_id="new-project",
-    db_directory="./.hmc_memory"
-)
+memory = HybridMemoryCore(project_id="new-project", db_directory="./.hmc_memory")
 
 print("✅ HMC initialized in new project")
 
@@ -25,7 +22,7 @@ print("✅ Persona attributes stored")
 voice_examples = [
     "I'm here to help you write better code",
     "Let me assist you with that implementation",
-    "Consider using design patterns for better maintainability"
+    "Consider using design patterns for better maintainability",
 ]
 
 for example in voice_examples:
@@ -41,10 +38,7 @@ print("✅ Workflow state initialized")
 
 # Verify persistence by creating a new instance
 print("\n--- Testing persistence ---")
-memory2 = HybridMemoryCore(
-    project_id="new-project",
-    db_directory="./.hmc_memory"
-)
+memory2 = HybridMemoryCore(project_id="new-project", db_directory="./.hmc_memory")
 
 persona_name = memory2.get_fact("__persona_name__")
 print(f"✅ Retrieved persona name: {persona_name}")
