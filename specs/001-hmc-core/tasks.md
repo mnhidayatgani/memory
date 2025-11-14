@@ -385,11 +385,13 @@ Phase 1 (Setup) → Phase 2 (Foundational)
 **Context**: The CLI functionality (`hmc seed` command) is fully implemented and operational. However, unit tests specifically for the CLI layer require Typer's CliRunner testing framework, which has special considerations:
 
 1. **Typer Testing Complexity**:
+
    - Requires `typer.testing.CliRunner` for isolated command invocation
    - Click-style test patterns don't directly translate to Typer
    - Context isolation and argument parsing need special handling
 
 2. **Current Validation**:
+
    - ✅ All CLI functionality validated through integration tests
    - ✅ End-to-end `hmc seed` tested in `test_seeder_brownfield.py`
    - ✅ CLI entry point configured and working (`hmc` command available after install)
@@ -402,7 +404,8 @@ Phase 1 (Setup) → Phase 2 (Foundational)
    - Help text display
    - Exit code verification
 
-**Recommendation**: 
+**Recommendation**:
+
 - **Priority**: Low - functionality is complete and validated
 - **Approach**: Add Typer-specific test patterns when upgrading testing infrastructure
 - **Workaround**: Integration tests provide sufficient coverage for production use

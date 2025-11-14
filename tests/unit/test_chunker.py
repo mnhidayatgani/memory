@@ -152,7 +152,7 @@ def function3():
             assert "content" in chunk
             assert "line_range" in chunk
             assert isinstance(chunk["content"], str)
-            assert isinstance(chunk["line_range"], tuple)
+            assert isinstance(chunk["line_range"], str)
 
     def test_sequential_line_ranges(self):
         """Test that line ranges are sequential and non-overlapping."""
